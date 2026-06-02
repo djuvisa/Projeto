@@ -12,6 +12,15 @@ body{
 }
 
 /* Cabeçalho */
+#titulo{
+  position: absolute;
+  width: 838.81px;
+  height: 100.73px;
+  left: 63.18px;
+  top: -5.31px;
+  transform: rotate(1deg);
+}
+
 #cabecalho{
     background: #F2B33D;
     height: 100px;

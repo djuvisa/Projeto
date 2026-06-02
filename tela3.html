@@ -10,21 +10,27 @@
 <body>
     <!--banner-->
    <header id="cabecalho">
-    <h1>BOA PERGUNTA!</h1>
+    <h1><img src="img/logo.png" alt="logo com escrita BOA PERGUNTA!"></h1>
     </header>
 
     <section class="cadastro">
     <h2>Login</h2>
     
-    <label>Email: <input type="text" id="email"></label>
+    <label class="form">Email: <input type="text" id="email"></label>
 
-    <label>Senha:<input type="text" id="senha"></label>
+    <label class="form">Senha:<input type="text" id="senha"></label>
 
-    <button onclick="fazerLogin()">Entrar</button>
+    <button onclick="fazerLogin()" class="form">Entrar</button>
 
     <p>Não tem uma conta? <a class="a" href="tela2.html">Crie uma</a></p>
 
     </section>
+
+    <footer class="footer">
+        <img src="img/image-removebg-preview (3).png" id="roborFooter"> 
+        <span class="footerText">Desenvolvido por Filipe, Laissa, Isadora, Pedro</span>
+
+    </footer>
     <script src="js/funcao.js"></script>
 </body>
 </html>

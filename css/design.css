@@ -73,7 +73,7 @@ nav{
     padding: 80px 40px;
 }
 
-.materias h2{
+.destaqueTitulos{
     text-align: center;
     margin-bottom: 50px;
     color: white;
@@ -135,10 +135,42 @@ nav{
 }
 
 /*TELA 2 e 3*/
+.tituloconta{
+    font-size: 60px;
+    
+}
 .cadastro{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content:center;
+    margin-top: 180px;
 }
-
+form{
+    display: flex;
+    flex-direction: column;
+}
+label /*pego na i.a para colocar os nomes em cima*/{
+    display: flex;       /* Transforma a label em um container flex */
+    flex-direction: column; /* Alinha o texto e o input verticalmente */
+    margin-top: 15px;    /* Dá um espaço legal entre cada bloco de campo */
+    color: white;        /* Cor do texto (ajuste se necessário para destacar no fundo azul) */
+}
+input {
+    padding: 9px;
+    margin-top: 5px;
+    border: 1px solid;
+    border-radius: 5px;
+    
+}
+.botao{
+    padding: 10px;
+    border-radius:7px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: #F2B33D;
+    border: none;
+    color: rgb(255, 255, 255);  
+    font-size: x-large;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+}

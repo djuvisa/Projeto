@@ -122,5 +122,30 @@ function inserirDisciplinasDefault() {
     });
 }
 
+// Função de aviso em caso de conta cadastrada anteriormente
+function cadastrarUsuario(nome, email, senha) {
+    const query = 'INSERT INTO' usuarios (nome, email, senha) VALUES (?, ?, ?);
+
+    db.run(query, [nome, email, senha], fuction (err) {
+        if (err) {
+            // Verifica se o email já existe no banco
+            if (err.message.includes('UNIQUE constraint failed')) {
+                return callbackify({
+                    status: 400
+                    message: 'Esta conta já foi cadastrada antes!'
+                });
+            }
+            return callback({ status: 500, message: 'Erro no banco de dados.' });
+        }
+        callback(null, { id: this.lastID, message: 'Sua conta foi criada!'})
+    });
+}
+
+// Exportação dos módulos
+module.exports = {
+    db,
+    cadastrarUsuario
+};
+
 // Exportar a conexão do banco de dados
 module.exports = db;

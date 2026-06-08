@@ -25,9 +25,8 @@ body{
     align-items: center;
 }
 
-#cabecalho h1{
-    font-size: 4rem;
-    color: #1C3272;
+h1{
+    margin-top: 20px;
 }
 
 /* Menu */
@@ -229,5 +228,13 @@ input {
 }
 
 .disciplina{
-    
+
+}
+
+#robo4{
+    width: 200px;
+    height: auto;
+    position: absolute;
+    top: 180px;
+    left:40px;
 }

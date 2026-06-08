@@ -31,7 +31,7 @@ async function fazerLogin(){
     //Código gerado pela IA a partir do prompt 'Como conectar o código acima com banco de dados SQLITLE pelo node
     const usuario = {email: email, senha: senha};
 
-     window.location.href = "tela4.html"; 
+     window.location.href = "tela4.htmL"; 
      return true;
 
      try {

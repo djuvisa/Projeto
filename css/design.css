@@ -9,6 +9,10 @@ body{
     background: #1C3272;
     color: white;
     font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que o corpo tenha no mínimo a altura da tela inteira */
+    margin: 0; /* Remove margens padrão do navegador */
 }
 
 /* Cabeçalho */
@@ -42,12 +46,15 @@ nav{
 }
 
 /* Destaque */
-#destaque{
+.destaque{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 80px;
     max-width: 500px;
+    width: 100%;
+    min-height: 100vh;
+    position:relative
 }
 
 #destaque p{
@@ -70,7 +77,8 @@ nav{
 
 /* Seção Matérias */
 .materias{
-    padding: 80px 40px;
+    width: 100%;
+
 }
 
 .destaqueTitulos{
@@ -113,16 +121,14 @@ nav{
     background-color: #2b548a;
     padding: 4px ;          
     width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    margin-top: auto; /* Garante que o rodapé fique na parte inferior da página */
 }
 .roboinicial {
     width: 350px;
     height: auto;
     position: absolute;
     top: 100px;
-    right: 90px;
+    left: 1400px;
 }
 
 

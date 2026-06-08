@@ -205,9 +205,20 @@ input {
 }
 
 .paginas{
+    display:flex;
+    justify-content: center;
+    align-items:center;
     width: 300px;
     height: 300px;
     border: 3px solid #F2B33D;
     padding: 20px;
     background: #1C3272;
+    background-color: #f1ba54;
+}
+
+#titulo4{
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    margin-top: 50px;
 }

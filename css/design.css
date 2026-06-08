@@ -117,6 +117,14 @@ nav{
     bottom: 0;
     left: 0;
 }
+.roboinicial {
+    width: 350px;
+    height: auto;
+    position: absolute;
+    top: 100px;
+    right: 90px;
+}
+
 
 /*alterações DORA*/
 
@@ -139,7 +147,10 @@ nav{
     font-size: 60px;
     
 }
-.cadastro{
+.tituloconta2{
+    font-size: 40px;
+}
+.cadastro{  
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -2,6 +2,8 @@ const inputNome = document.getElementById('nome');
 const inputEmail = document.getElementById('email');
 const inputSenha = document.getElementById('senha');
 
+ const URL_API_CADASTRO = 'http://localhost:3000/api/usuarios';
+
 async function criarConta(){
     let nome = inputNome.value;
     let email = inputEmail.value;
@@ -14,8 +16,24 @@ async function criarConta(){
 
     const usuario = {nome: nome, email: email, senha: senha};
 
-     window.location.href = "tela4.html"; 
-     return true;
+    try {
+        const resposta = await fetch(URL_API_CADASTRO, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(usuario)
+        });
+
+        const resultado = await resposta.json();
+
+        if (resposta.ok) {
+            alert("Conta criada com sucesso!");
+            window.location.href = "tela4.html"; 
+        } else {
+            alert("Erro: " + (resultado.mensagem || "Erro ao cadastrar"));
+        }
+    } catch (erro) {
+        alert("Não foi possível conectar ao servidor.");
+    }
 
 }
 
@@ -31,12 +49,9 @@ async function fazerLogin(){
     //Código gerado pela IA a partir do prompt 'Como conectar o código acima com banco de dados SQLITLE pelo node
     const usuario = {email: email, senha: senha};
 
-     window.location.href = "tela4.htmL"; 
-     return true;
-
      try {
         // Envia os dados para o seu servidor Node.js
-        const resposta = await fetch('', {
+        const resposta = await fetch(URL_API_LOGIN, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(usuario)

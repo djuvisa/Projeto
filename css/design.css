@@ -83,7 +83,7 @@ nav{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 .banner2{
-    font-size: 30px;
+    font-size: 32px;
     color: #F2B33D;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Sombra para destacar o texto */
@@ -150,7 +150,8 @@ nav{
     height: auto;
     position: absolute;
     top: 100px;
-    left: 1900px;
+    left: 280%;
+    display: block;
 }
 
 
@@ -283,6 +284,11 @@ input {
     text-transform: capitalize; /* Garante apenas a primeira letra Maiúscula */
 }
 
+#seta{
+    width: 50px;
+    right: 100px;
+}
+
 /*TELA 5*/
 /* Ajustando o Cabeçalho para alinhar a Logo e o Menu lado a lado */
 #cabecalho{
@@ -367,6 +373,7 @@ nav {
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-decoration: none;
 }
 
 /* Efeito Hover nas disciplinas */
@@ -389,9 +396,10 @@ nav {
 }
 
 #robo4{
-    width: 650px;
+    width: auto;
     height: auto;
     top: 200px;
-    left:40px;
+    right:72%;
     margin-right: 100px;
 }
+/*TELA 6*/

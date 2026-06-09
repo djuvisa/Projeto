@@ -79,6 +79,17 @@ nav{
     border: none;
     padding: 15px 30px;
     border-radius: 5px;
+    font-size: 3rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.banner2{
+    font-size: 30px;
+    color: #F2B33D;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Sombra para destacar o texto */
+    top: 70%;
+    left: 50%;
+
 }
 
 #button1 a{

@@ -1,5 +1,5 @@
 // Importação das bibliotecas necessárias
-//A ideia da base do codigo foi feita por IA
+// A ideia da base do codigo foi feita por IA
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
@@ -28,8 +28,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
   }
 });
 
-
-//rotas do banco de dados
+// Rotas do banco de dados
 
 function hashSenha(senha) {
   return crypto.createHash('sha256').update(senha).digest('hex');
@@ -128,7 +127,7 @@ app.post('/api/login', (req, res) => {
   });
 });
 
-// PUT - Atualizar usuário
+// POST - Atualizar usuário
 app.put('/api/usuarios/:id', (req, res) => {
   const { id } = req.params;
   const { nome, email } = req.body;
@@ -145,6 +144,24 @@ app.put('/api/usuarios/:id', (req, res) => {
     }
     res.json({ id, nome, email });
   });
+});
+
+// POST - Verificar se o usuário já está cadastrado
+app.post('/api/login/verificar', (req, res) => {
+  const { id } = req.body;
+
+  if (!id) {
+    res.status(400).json({ erro: 'O ID do usuário é obrigatório' });
+    return;
+  }
+
+  if (usuariosLogados.has(Number(id))) {
+    res.status(409).json({ erro: 'Este e-mail já possui uma conta cadastrada' });
+    return;
+  }
+
+  usuariosLogados.add(Number(id));
+  res.json({ mensagem: 'Sessão iniciada com sucesso!' });
 });
 
 // DELETE - Deletar usuário

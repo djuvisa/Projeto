@@ -1,6 +1,9 @@
+// Importação das bibliotecas necessárias
+//A ideia da base do codigo foi feita por IA
 const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
+const crypto = require('crypto');
 const path = require('path');
 
 const app = express();
@@ -28,14 +31,18 @@ const db = new sqlite3.Database(dbPath, (err) => {
 
 //rotas do banco de dados
 
+function hashSenha(senha) {
+  return crypto.createHash('sha256').update(senha).digest('hex');
+}
+
 // Função para inicializar o banco de dados
 function inicializarBancoDados() {
-  // Criar tabela de exemplo (usuários)
   db.run(`
     CREATE TABLE IF NOT EXISTS usuarios (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       nome TEXT NOT NULL,
-      email TEXT UNIQUE,
+      email TEXT UNIQUE NOT NULL,
+      senha TEXT NOT NULL,
       criado_em DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `, (err) => {
@@ -78,20 +85,46 @@ app.get('/api/usuarios/:id', (req, res) => {
 
 // POST - Criar novo usuário
 app.post('/api/usuarios', (req, res) => {
-  const { nome, email } = req.body;
+  const { nome, email, senha } = req.body;
 
-  if (!nome || !email) {
-    res.status(400).json({ erro: 'Nome e email são obrigatórios' });
+  if (!nome || !email || !senha) {
+    res.status(400).json({ erro: 'Nome, email e senha são obrigatórios' });
     return;
   }
 
-  const sql = 'INSERT INTO usuarios (nome, email) VALUES (?, ?)';
-  db.run(sql, [nome, email], function(err) {
+  const senhaHash = hashSenha(senha);
+  const sql = 'INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)';
+  db.run(sql, [nome, email, senhaHash], function(err) {
     if (err) {
       res.status(500).json({ erro: err.message });
       return;
     }
     res.status(201).json({ id: this.lastID, nome, email });
+  });
+});
+
+// POST - Fazer login
+app.post('/api/login', (req, res) => {
+  const { email, senha } = req.body;
+
+  if (!email || !senha) {
+    res.status(400).json({ mensagem: 'Email e senha são obrigatórios' });
+    return;
+  }
+
+  const senhaHash = hashSenha(senha);
+  db.get('SELECT id, nome, email FROM usuarios WHERE email = ? AND senha = ?', [email, senhaHash], (err, row) => {
+    if (err) {
+      res.status(500).json({ mensagem: err.message });
+      return;
+    }
+
+    if (!row) {
+      res.status(401).json({ mensagem: 'Email ou senha inválidos' });
+      return;
+    }
+
+    res.json({ mensagem: 'Login realizado com sucesso', usuario: row });
   });
 });
 

@@ -24,6 +24,18 @@ body{
     justify-content: center;
     align-items: center;
 }
+.banner{
+    font-size: 100px !important;
+    color: #ffffff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para destacar o texto */
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: full-width;
+    margin:auto;
+}
 
 h1{
     margin-top: 20px;
@@ -127,7 +139,7 @@ nav{
     height: auto;
     position: absolute;
     top: 100px;
-    left: 1400px;
+    left: 1900px;
 }
 
 
@@ -192,50 +204,183 @@ input {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
 }
 
-/*TELA4*/
+/*TELA4 + ajuda da i.a para os cards*/
+.tela4-body{
+    background: linear-gradient(180deg, #162656 0%, #304480 100%);
+}
 #inicio{
     display: flex;
     flex-direction:row;
     justify-content: center;
     align-items:center;
     flex-grow: 1;
-    gap: 30px;
+    gap: 40px;
     flex-wrap: nowrap;
     width: 100%;
+    padding: 20px;
 }
 
 .paginas{
     display:flex;
     justify-content: center;
     align-items:center;
-    width: 300px;
-    height: 300px;
-    border: 3px solid #F2B33D;
+    width: 280px;
+    height: 320px;
+    border: none;
     padding: 20px;
     background: #1C3272;
     background-color: #f1ba54;
+    border-radius: 23px;
+    text-decoration: none;
+    color: #1C3272;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suaviza a transição do hover (hover aprendido com ajuda da ia)*/
+}
+/* Efeito de hover para os cards quando passa o mouse*/
+.paginas:hover{
+    transform: translateY(-8px); /* Move o card para cima de leve*/
+    box-shadow: 0 14px 30px rgba(242, 179, 61, 0.4); /* brilho amarelo sutil */
 }
 
 #titulo4{
     text-align: center;
     color: white;
-    font-size: 40px;
-    margin-top: 50px;
+    font-size: 60px;
+    margin-top: 60px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+.card-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.card-icon{
+    font-size: 80px;
+/* Filtro discreto para dar profundidade ao ícone em relação ao fundo */
+    filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.15));
+}
+.card-text{
+    font-size: 26px;
+    font-weight: bold;
+    color: #1C3272;
+    text-align: center;
+    padding: 0 10px; /* Pequeno padding para evitar que o texto encoste nas bordas do card */
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-transform: capitalize; /* Garante apenas a primeira letra Maiúscula */
 }
 
 /*TELA 5*/
-.disciplinaS{
-
+/* Ajustando o Cabeçalho para alinhar a Logo e o Menu lado a lado */
+#cabecalho{
+    background: #F2B33D;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.disciplina{
+/* Estilizando o Menu dentro do Cabeçalho */
+nav {
+    display: flex;
+    gap: 30px; /* Espaço entre os links */
+    padding: 0;
+}
 
+.a {
+    color: #ffffff; /* Texto em azul escuro para contrastar perfeitamente com o fundo amarelo */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 30px;
+    transition: color 0.2s ease;
+}
+
+.a:hover {
+    color: #F2B33D; /* Efeito visual ao passar o mouse */
+}
+
+/*Container Geral das Disciplinas */    
+.disciplinaS {
+    max-width: 1200px;
+    width: 90%;
+    margin: 40px auto; /* Centraliza na tela e desgruda do topo */
+    flex-grow: 1; /* Faz o conteúdo empurrar o rodapé para baixo */
+}
+
+.disciplinaS h2 {
+    color: #F2B33D; /* Título amarelo combinando com a identidade */
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+/*A Mágica do Grid: Organiza os blocos em colunas automáticas */
+.disciplinaS {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Criando um container invisível via CSS para as disciplinas (ou aplique direto se preferir) */
+.disciplinaS {
+    display: block;
+}
+
+.disciplinaS {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Cria colunas responsivas */
+    gap: 20px; /* Espaçamento entre os blocos */
+    padding-bottom: 60px;
+}
+
+/* Forçando o H2 a ocupar a linha inteira do grid */
+.disciplinaS h2 {
+    grid-column: 1 / -1; 
+    margin-bottom: 10px;
+}
+
+/* Estilizando cada Bloco de Disciplina */
+.disciplina {
+    background-color: rgba(255, 255, 255, 0.05); /* Fundo azul bem suave */
+    border: 2px solid #F2B33D; /* Borda amarela */
+    border-radius: 12px; /* Cantos arredondados modernos */
+    padding: 25px 20px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Efeito Hover nas disciplinas */
+.disciplina:hover {
+    background-color: #F2B33D;
+    color: #1C3272; /* Inverte as cores quando passa o mouse */
+    transform: translateY(-4px); /* Sobe de leve */
+    box-shadow: 0 8px 20px rgba(242, 179, 61, 0.3);
+}
+
+#robo4 {
+    position: fixed; /* Fica fixo na tela */
+    bottom: 45px; /* Posicionado logo acima do rodapé */
+    right: 20px;  /* No canto inferior direito */
+    width: 120px; /* Tamanho controlado para não assustar */
+    height: auto;
+    z-index: 10; /* Garante que fica por cima do fundo */
+    pointer-events: none; /* Se ele cobrir algo de leve, o clique passa por ele */
+    filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.3)); /* Sombra bonita */
 }
 
 #robo4{
-    width: 200px;
+    width: 650px;
     height: auto;
-    position: absolute;
-    top: 180px;
+    top: 200px;
     left:40px;
+    margin-right: 100px;
 }

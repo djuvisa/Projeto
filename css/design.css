@@ -284,9 +284,15 @@ input {
     text-transform: capitalize; /* Garante apenas a primeira letra Maiúscula */
 }
 
-#seta{
-    width: 50px;
-    right: 100px;
+#seta {
+    width: 35px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#seta:hover {
+    transform: scale(1.15); /* Seta aumenta levemente ao passar o mouse */
 }
 
 /*TELA 5*/
@@ -298,26 +304,6 @@ input {
     justify-content: center;
     align-items: center;
 }
-
-/* Estilizando o Menu dentro do Cabeçalho */
-nav {
-    display: flex;
-    gap: 30px; /* Espaço entre os links */
-    padding: 0;
-}
-
-.a {
-    color: #ffffff; /* Texto em azul escuro para contrastar perfeitamente com o fundo amarelo */
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 30px;
-    transition: color 0.2s ease;
-}
-
-.a:hover {
-    color: #F2B33D; /* Efeito visual ao passar o mouse */
-}
-
 /*Container Geral das Disciplinas */    
 .disciplinaS {
     max-width: 1200px;
@@ -376,6 +362,12 @@ nav {
     text-decoration: none;
 }
 
+/*tirando o link do nome programação web!!*/
+.disciplina a {
+    text-decoration: none;
+    color: inherit; /* Faz o link usar a mesma cor de texto da caixinha (white) */
+}
+
 /* Efeito Hover nas disciplinas */
 .disciplina:hover {
     background-color: #F2B33D;
@@ -402,4 +394,120 @@ nav {
     right:72%;
     margin-right: 100px;
 }
+.titulo5 {
+    text-align: center;
+    color: #F2B33D;
+    font-size: 36px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 40px;
+}
 /*TELA 6*/
+/* Ajuste do cabeçalho para separar a seta da logo */
+#cabecalho{
+    background: #F2B33D;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#seta {
+    width: 35px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#seta:hover {
+    transform: scale(1.15); /* Seta aumenta levemente ao passar o mouse */
+}
+
+/* Títulos textuais da tela */
+.titulo-pagina {
+    text-align: center;
+    color: #F2B33D;
+    font-size: 36px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 40px;
+}
+
+.subtitulo-pagina {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+    margin-bottom: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+/* Container que deixa os conteudos centralizados e bonitinhos na tela */
+.conteudo-principal {
+    max-width: 750px; /* Mantém as barras em um tamanho elegante */
+    width: 90%;
+    margin: 0 auto 50px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Espaço entre cada barra */
+}
+
+/* bordas */
+.PW, .PW2 {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.04); /* Fundo sutil */
+    border: 2px solid #F2B33D; /* Borda amarela contínua */
+    border-radius: 16px; /* Cantos arredondados da foto */
+    padding: 18px 24px;
+    color: white;
+    font-family: sans-serif;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* tracejado para o projeto final.. (.PW2) */
+.PW2 {
+    border-style: dashed;
+}
+
+/* Efeito Hover (Quando passa o mouse sobre os conteúdos) */
+.PW:hover, .PW2:hover {
+    background-color: rgba(245, 183, 70, 0.199); /* Ganha um brilho amarelo de fundo */
+    transform: translateX(8px); /* Desloca sutilmente para a direita ao interagir */
+    box-shadow: 0 4px 15px rgba(242, 179, 61, 0.2);
+}
+
+/* estrutura do icone bonitinho e parte interna de cada conteudo */
+.icone {
+    font-size: 26px;
+    margin-right: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.texto {
+    flex-grow: 1; /* Faz o texto empurrar a seta para a extremidade direita */
+}
+
+.texto h3 {
+    font-size: 18px;
+    margin-bottom: 2px;
+    font-weight: 600;
+}
+
+.texto p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6); /* Subtexto levemente cinza */
+}
+
+.seta {
+    font-size: 18px;
+    color: #F2B33D;
+    opacity: 1;
+    transition: transform 0.3s ease;
+}
+
+/* Faz a setinha da ponta ir para frente no hover */
+.PW:hover .modulo-seta, .PW2:hover .modulo-seta {
+    opacity: 1;
+    transform: translateX(3px);
+}

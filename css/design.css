@@ -14,7 +14,7 @@ body{
     min-height: 100vh; /* Garante que o corpo tenha no mínimo a altura da tela inteira */
 }
 
-/* Cabeçalho */
+/* TELA 1 */
 
 #cabecalho{
     background: #F2B33D;
@@ -43,7 +43,7 @@ h1{
     margin-top: 20px;
 }
 
-/* Menu */
+/* MENU */
 nav{
     display: flex;
     justify-content: center;
@@ -57,7 +57,6 @@ nav{
     cursor: pointer;
 }
 
-/* Destaque */
 .destaque{
     display: flex;
     flex-direction: column;
@@ -93,15 +92,9 @@ nav{
 
 }
 
-#button1 a{
-    color: white;
-    text-decoration: none;
-}
-
-/* Seção Matérias */
+/* TELA1 - MATERIAS*/
 .materias{
     width: 100%;
-
 }
 
 .destaqueTitulos{
@@ -110,7 +103,6 @@ nav{
     color: white;
 }
 
-/* Cards */
 .cards{
     display: flex;
     justify-content: center;
@@ -124,19 +116,25 @@ nav{
     border: 3px solid #F2B33D;
     padding: 20px;
     background: #1C3272;
+    line-height: 1.6;
 }
 
-.card h3{
+h3{
     color: #F2B33D;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.card p{
-    line-height: 1.6;
+.roboinicial {
+    max-width: 350px;
+    height: auto;
+    position: absolute;
+    top: 100px;
+    left: 75vw; 
+    display: block;
 }
 
-/* Rodapé */
+/* FOOTER */
 .footer{
     display: flex;
     align-items: center;
@@ -146,24 +144,13 @@ nav{
     width: 100%;
     margin-top: auto; /* Garante que o rodapé fique na parte inferior da página */
 }
-.roboinicial {
-    max-width: 350px;
-    height: auto;
-    position: absolute;
-    top: 100px;
-    left: 75vw; 
-    display: block;
-}
-/*alterações DORA*/
-
-/*FOOTER*/
 
 .footer img {
     width: 40px;
     height: auto;
 }
 
-.footerText{
+#footerText{
     color: #ff9d2e; 
     font-family: sans-serif;
     font-size: 15px;
@@ -171,30 +158,28 @@ nav{
 }
 
 /*TELA 2 e 3*/
-.tituloconta{
-    font-size: 60px;
+.tituloConta{
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 5%;
     
 }
-.tituloconta2{
-    font-size: 60px;
-    margin-bottom: 20px;
-}
+
 .cadastro{  
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content:center;
-    margin-top: 180px;
 }
 form{
     display: flex;
     flex-direction: column;
 }
-label /*pego na i.a para colocar os nomes em cima*/{
-    display: flex;       /* Transforma a label em um container flex */
-    flex-direction: column; /* Alinha o texto e o input verticalmente */
+.form /*pego na i.a para colocar os nomes em cima*/{
+    display: flex;   
+    flex-direction: column; 
     margin-top: 15px;    /* Dá um espaço legal entre cada bloco de campo */
-    color: white;        /* Cor do texto (ajuste se necessário para destacar no fundo azul) */
+    color: white; 
 }
 input {
     padding: 9px;
@@ -215,10 +200,21 @@ input {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
 }
 
-/*TELA4 + ajuda da i.a para os cards*/
+/*TELA 4 + ajuda da i.a para os cards*/
 .tela4-body{
     background: linear-gradient(180deg, #162656 0%, #304480 100%);
 }
+
+.titulo{
+    text-align: center;
+    color: white;
+    font-size: 60px;
+    margin-top: 60px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
 #inicio{
     display: flex;
     flex-direction:row;
@@ -251,15 +247,6 @@ input {
     box-shadow: 0 14px 30px rgba(242, 179, 61, 0.4); /* brilho amarelo sutil */
 }
 
-#titulo4{
-    text-align: center;
-    color: white;
-    font-size: 60px;
-    margin-top: 60px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
 .card-content{
     display: flex;
     flex-direction: column;
@@ -294,8 +281,7 @@ input {
 }
 
 /*TELA 5*/
-/*Container Geral das Disciplinas */    
-/* Criando um container invisível via CSS para as disciplinas (ou aplique direto se preferir) */
+
 .disciplinaS {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -311,7 +297,6 @@ input {
     flex-grow: 1; /* Faz o conteúdo empurrar o rodapé para baixo */
 }
 
-/* Estilizando cada Bloco de Disciplina */
 .disciplina {
     background-color: rgba(255, 255, 255, 0.05); /* Fundo azul bem suave */
     border: 2px solid #F2B33D; /* Borda amarela */
@@ -330,13 +315,11 @@ input {
     text-decoration: none;
 }
 
-/*tirando o link do nome programação web!!*/
 .disciplina a {
     text-decoration: none;
     color: inherit; /* Faz o link usar a mesma cor de texto da caixinha (white) */
 }
 
-/* Efeito Hover nas disciplinas */
 .disciplina:hover {
     background-color: #F2B33D;
     color: #1C3272; /* Inverte as cores quando passa o mouse */
@@ -357,28 +340,10 @@ input {
     filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.3));
 }
 
-.titulo5 {
-    text-align: center;
-    color: #F2B33D;
-    font-size: 36px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin-top: 40px;
-}
 /*TELA 6*/
 
-#seta {
-    width: 35px;
-    height: auto;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-#seta:hover {
-    transform: scale(1.15); /* Seta aumenta levemente ao passar o mouse */
-}
-
 /* Títulos textuais da tela */
-.titulo-pagina {
+.tituloPagina {
     text-align: center;
     color: #F2B33D;
     font-size: 36px;
@@ -396,7 +361,7 @@ input {
 
 /* Container que deixa os conteudos centralizados e bonitinhos na tela */
 .conteudo-principal {
-    max-width: 750px; /* Mantém as barras em um tamanho elegante */
+    max-width: 750px;
     width: 90%;
     margin: 0 auto 50px auto;
     display: flex;
@@ -423,7 +388,6 @@ input {
     border-style: dashed;
 }
 
-/* Efeito Hover (Quando passa o mouse sobre os conteúdos) */
 .PW:hover, .PW2:hover {
     background-color: rgba(245, 183, 70, 0.199); /* Ganha um brilho amarelo de fundo */
     transform: translateX(8px); /* Desloca sutilmente para a direita ao interagir */
@@ -468,7 +432,7 @@ input {
 }
 
 
-/*TELA AGENDA*/
+/*TELA 11 e 12 - AGENDA*/
 
 #modalTarefa {
     display: none;
@@ -480,6 +444,40 @@ input {
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 1000;
 }
+
+#formTarefa{
+    display: flex;
+    flex-direction: column;   /* Alinha todos os elementos em coluna vertical */
+    align-items: center;       /* Centraliza horizontalmente todos os itens (labels e botão) */
+    gap: 15px;                 /* Cria um espaçamento uniforme entre cada campo */
+    width: 100%;
+}
+.janelaTarefa{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.paginaTarefa{
+    height: 70vh;
+    width: 50vw;
+}
+
+.form2{
+    display: flex;
+    flex-direction: column;  
+    align-items: center;       
+    width: 100%;
+    color: white;  
+}
+
+.form2 input{
+    margin-top: 5px;          
+    padding: 5px;
+    width: 250px;
+}
 /*BOTÕES*/
 #adicionarTarefa{
     background-color: #ffffff0d; 
@@ -489,8 +487,8 @@ input {
     font-size: 16px;
     font-weight: bold;
     color: white;
-    min-height: 90px;
-    width: 180px;
+    min-height: 4rem;
+    width: 260px;
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -509,6 +507,10 @@ input {
     background-color: #F2B33D; 
     border: 2px solid #ffffff0d;
     border-radius: 7px;
+    padding: 10px 20px;
     text-align: center;
+    cursor: pointer;
+    font-weight: bold;
     margin-top: 5vh;
+    width:35vw;
 }

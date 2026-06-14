@@ -86,6 +86,11 @@ adicionarTarefa.addEventListener('click', () => {
     modalTarefa.style.display = 'block';
 });
 }
+if(modalTarefa){
+    modalTarefa.addEventListener('click',() =>{
+        modalTarefa.style.display = 'none';
+    });
+}
 //Fecha a sobreposição ao enviar tarefa
 if (criarTarefa) {
 criarTarefa.addEventListener('click', async (event) => {
@@ -179,9 +184,9 @@ async function mostrarTarefas(tarefa) {
                 const listaTarefas = document.getElementById(semanaTarefa);
                 if(listaTarefas){
                      listaTarefas.innerHTML += `
-                     <li>${disciplinaValor}</li>
-                     <li>${descricaoValor}</li>
-                     <li>${tempoLimite}</li>`;
+                     <li>${disciplinaValor}
+                     {descricaoValor}
+                     <{tempoLimite}</li>`;
                 }
         });
 

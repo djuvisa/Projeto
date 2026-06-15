@@ -517,7 +517,7 @@ input {
     width:35vw;
 }
 
-.meses{
+.lista{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
@@ -525,7 +525,7 @@ input {
     margin-bottom: 5%;
 }
 
-.semanas{
+.tarefasPendentes{
     border: #F2B33D solid;
     border-radius: 4px;
     height: 11rem;

@@ -150,10 +150,7 @@ async function mostrarTarefas(tarefa) {
 
         const tempoLimite = dataEntrega - dataAtual;
 
-        document.getElementById('semana1').innerHTML = '';
-        document.getElementById('semana2').innerHTML = '';
-        document.getElementById('semana3').innerHTML = '';
-        document.getElementById('semana4').innerHTML = '';
+        document.getElementById('semana').innerHTML = '';
 
         dados.forEach(item => {
 
@@ -167,24 +164,21 @@ async function mostrarTarefas(tarefa) {
             const diferencaEmDias = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24));
             const tempoLimite = diferencaEmDias + " dias";
 
-            let semanaTarefa = "";
-            if(diferencaEmDias >= 0 && diferencaEmDias < 7){
-                semanaTarefa = "semana1"
+
+            let corFundo = '';
+            if(diferencaEmDias >= 0 && diferencaEmDias < 3){
+                                 corFundo.style.backgroudColor = 'red';
             }
-            else if(diferencaEmDias < 14){
+            else if(diferencaEmDias < 5){
                 semanaTarefa = "semana2"
             }
-            else if(diferencaEmDias < 21){
+            else if(diferencaEmDias < 7){
                 semanaTarefa = "semana3"
             }
-            else if(diferencaEmDias < 28){
-                semanaTarefa = "semana4"
-            }
-
                 const listaTarefas = document.getElementById(semanaTarefa);
                 if(listaTarefas){
                      listaTarefas.innerHTML += `
-                     <li>${disciplinaValor} - 
+                     <li style="${corFundo}">${disciplinaValor} - 
                      {descricaoValor} - 
                      {tempoLimite} - 
                      <button onclick="editarTarefa('${item.id}')">✎</button> -

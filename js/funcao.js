@@ -169,24 +169,26 @@ async function mostrarTarefas(tarefa) {
 
             let semanaTarefa = "";
             if(diferencaEmDias >= 0 && diferencaEmDias < 7){
-                let semanaTarefa = "semana1"
+                semanaTarefa = "semana1"
             }
             else if(diferencaEmDias < 14){
-                let semanaTarefa = "semana2"
+                semanaTarefa = "semana2"
             }
             else if(diferencaEmDias < 21){
-                let semanaTarefa = "semana3"
+                semanaTarefa = "semana3"
             }
             else if(diferencaEmDias < 28){
-                let semanaTarefa = "semana4"
+                semanaTarefa = "semana4"
             }
 
                 const listaTarefas = document.getElementById(semanaTarefa);
                 if(listaTarefas){
                      listaTarefas.innerHTML += `
-                     <li>${disciplinaValor}
-                     {descricaoValor}
-                     <{tempoLimite}</li>`;
+                     <li>${disciplinaValor} - 
+                     {descricaoValor} - 
+                     {tempoLimite} - 
+                     <button onclick="editarTarefa('${item.id}')">✎</button> -
+                     <button onclick="excluirTarefa('${item.id}')">🗑</button></li>`;
                 }
         });
 
@@ -195,4 +197,44 @@ async function mostrarTarefas(tarefa) {
   }
 }
 
-        
+
+async function exluirTarefa(id) {
+    if(!confirm("Tem certeza que deseja excluir essa tarefa?")){
+        return;
+    }
+    try{
+        const resposta = await fetch(`${URL_API_TAREFA}\${id}`,{
+            method: 'DELETE'
+        });
+        if(resposta.ok){
+            alert("Tarefa excluida");
+            mostrarTarefas();
+        }else{
+            alert("Não foi possivel excluir a tarefa");
+        }
+    }catch (erro) {
+        console.error('Não foi possível conectar ao servidor.');
+}
+}
+
+async function editarTarefa(id){
+    if(!confirm("Deseja atualizar essa tarefa?")){
+        return;
+    }
+    try{
+        const resposta = await fetch(URL_API_TAREFA, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(tarefa)
+        });
+        const resultado = await resposta.json();
+
+        if (resposta.ok) {
+            alert('Tarefa Atualizada!');
+        } else {
+            alert('Erro: ' + (resultado.mensagem || 'Não foi possível atualizar tarefa'));
+        }
+    } catch (erro) {
+        alert('Não foi possível conectar ao servidor.');
+    }
+}

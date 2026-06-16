@@ -94,11 +94,13 @@ if(modalTarefa){
 //Fecha a sobreposição ao enviar tarefa
 if (criarTarefa) {
 criarTarefa.addEventListener('click', async (event) => {
+    console.log('Botão clicado');
+    event.preventDefault();
 
     const disciplinaValor = disciplina.value.trim();
     const descricaoValor = descricao.value.trim();
     const dataAtualValor = dataAtual.value.trim();
-    const dataEntregaValor = dataEntrega.value.trim();
+    const dataEntregaValor = dataEntrega.value.trim();  
 
      if (!disciplinaValor || !descricaoValor || !dataAtualValor || !dataEntregaValor) {
         alert("Preencha todos os campos!");
@@ -116,9 +118,13 @@ criarTarefa.addEventListener('click', async (event) => {
         if (modalPai) {
         modalPai.style.display = 'none';
         }
+        if (modalTarefa) {
+        modalTarefa.style.display = 'none';
+}
 
-    modalTarefa.style.display = 'none';
-    await enviarTarefa(tarefa); //Deve enviar a tarefa para o banco 
+    console.log('Vai chamar enviarTarefa');
+    await enviarTarefa(tarefa);
+
     document.getElementById('formTarefa').reset();
 });
 }
@@ -134,6 +140,7 @@ async function enviarTarefa(tarefa){
 
         if (resposta.ok) {
             alert('Tarefa Criada!');
+            mostrarTarefas()
         } else {
             alert('Erro: ' + (resultado.mensagem || 'Não foi possível salvar tarefa'));
         }
@@ -148,13 +155,14 @@ async function mostrarTarefas(tarefa) {
         const resposta = await fetch(URL_API_TAREFA);
         const dados = await resposta.json();
 
-        const tempoLimite = dataEntrega - dataAtual;
+        const listaTarefas = window.parent.document.getElementById('semana') || document.getElementById('semana'); //linha feita pela IA como correção de erros encontrados.
 
-        document.getElementById('semana').innerHTML = '';
+        if (listaTarefas) {
+            listaTarefas.innerHTML = '';
 
-        dados.forEach(item => {
+           dados.forEach(item => {
 
-            // Atribuindo os valores do objeto 'item' para as suas variáveis
+            // Atribuindo os valores do objeto 'item' para as suas variáveis // Linhas feitas por IA
             const disciplinaValor = item.disciplina;
             const descricaoValor = item.descricao;
             const dataAtualValor = new Date(item.dataAtual);
@@ -164,29 +172,20 @@ async function mostrarTarefas(tarefa) {
             const diferencaEmDias = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24));
             const tempoLimite = diferencaEmDias + " dias";
 
-
-            let corFundo = '';
-            if(diferencaEmDias >= 0 && diferencaEmDias < 3){
-                                 corFundo.style.backgroudColor = 'red';
-            }
-            else if(diferencaEmDias < 5){
-                semanaTarefa = "semana2"
-            }
-            else if(diferencaEmDias < 7){
-                semanaTarefa = "semana3"
-            }
-                const listaTarefas = document.getElementById(semanaTarefa);
-                if(listaTarefas){
+            const listaTarefas = document.getElementById('semana');
+                
+                
+                    const corFundo = diferencaEmDias > 10 ? '#f8d7da' : '#d4edda';
                      listaTarefas.innerHTML += `
-                     <li style="${corFundo}">${disciplinaValor} - 
-                     {descricaoValor} - 
-                     {tempoLimite} - 
+                     <li style="background-color: ${corFundo};">${disciplinaValor} - 
+                     ${descricaoValor} - 
+                     ${tempoLimite} - 
                      <button onclick="editarTarefa('${item.id}')">✎</button> -
                      <button onclick="excluirTarefa('${item.id}')">🗑</button></li>`;
-                }
-        });
 
-        } catch (erro) {
+        });
+    }
+     } catch (erro) {
         console.error('Erro ao buscar o dado:', erro);
   }
 }

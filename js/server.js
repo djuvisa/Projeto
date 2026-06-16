@@ -6,6 +6,7 @@ const sqlite3 = require('sqlite3').verbose();
 const crypto = require('crypto');
 const path = require('path');
 
+
 const app = express();
 const PORT = 3000;
 
@@ -33,9 +34,10 @@ const db = new sqlite3.Database(dbPath, (err) => {
 function hashSenha(senha) {
   return crypto.createHash('sha256').update(senha).digest('hex');
 }
-
+//
 // Função para inicializar o banco de dados
 function inicializarBancoDados() {
+// tabela usuat
   db.run(`
     CREATE TABLE IF NOT EXISTS usuarios (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -51,8 +53,24 @@ function inicializarBancoDados() {
       console.log('Tabela usuarios verificada/criada com sucesso');
     }
   });
+ // Tabela tarefas
+  db.run(`
+    CREATE TABLE IF NOT EXISTS tarefas (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  disciplina TEXT NOT NULL,
+  descricao TEXT NOT NULL,
+  dataAtual TEXT NOT NULL,
+  dataEntrega TEXT NOT NULL,
+  criado_em DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+  `, (err) => {
+    if (err) {
+      console.error('Erro ao criar tabela tarefas:', err);
+    } else {
+      console.log('Tabela tarefas verificada/criada com sucesso');
+    }
+  });
 }
-
 // Rotas da API
 
 // GET - Listar todos os usuários
@@ -101,6 +119,35 @@ app.post('/api/usuarios', (req, res) => {
     res.status(201).json({ id: this.lastID, nome, email });
   });
 });
+// POST - Criar tarefa
+app.post('/api/tarefas', (req, res) => {
+   console.log('Recebido:', req.body);
+  const { disciplina, descricao, dataAtual, dataEntrega } = req.body;
+
+  const sql = `
+    INSERT INTO tarefas
+    (disciplina, descricao, dataAtual, dataEntrega)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  db.run(
+    sql,
+    [disciplina, descricao, dataAtual, dataEntrega],
+    function(err) {
+      if (err) {
+        return res.status(500).json({ erro: err.message });
+      }
+
+      res.status(201).json({
+        id: this.lastID,
+        disciplina,
+        descricao,
+        dataAtual,
+        dataEntrega
+      });
+    }
+  );
+});
 
 // POST - Fazer login
 app.post('/api/login', (req, res) => {
@@ -124,25 +171,6 @@ app.post('/api/login', (req, res) => {
     }
 
     res.json({ mensagem: 'Login realizado com sucesso', usuario: row });
-  });
-});
-
-// POST - Atualizar usuário
-app.put('/api/usuarios/:id', (req, res) => {
-  const { id } = req.params;
-  const { nome, email } = req.body;
-
-  const sql = 'UPDATE usuarios SET nome = ?, email = ? WHERE id = ?';
-  db.run(sql, [nome, email, id], function(err) {
-    if (err) {
-      res.status(500).json({ erro: err.message });
-      return;
-    }
-    if (this.changes === 0) {
-      res.status(404).json({ erro: 'Usuário não encontrado' });
-      return;
-    }
-    res.json({ id, nome, email });
   });
 });
 

@@ -149,8 +149,9 @@ async function enviarTarefa(tarefa){
     }
 }
 
+
 //Pegar as tarefas do banco
-async function mostrarTarefas(tarefa) {
+async function mostrarTarefas() {
     try{
         const resposta = await fetch(URL_API_TAREFA);
         const dados = await resposta.json();
@@ -171,11 +172,8 @@ async function mostrarTarefas(tarefa) {
             const diferencaEmMilissegundos = dataEntregaValor - dataAtualValor; 
             const diferencaEmDias = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24));
             const tempoLimite = diferencaEmDias + " dias";
-
-            const listaTarefas = document.getElementById('semana');
                 
-                
-                    const corFundo = diferencaEmDias > 10 ? '#f8d7da' : '#d4edda';
+            const corFundo = diferencaEmDias <= 3 ? '#f8d7da' : (diferencaEmDias <= 7 ? '#fff3cd' : '#d4edda');
                      listaTarefas.innerHTML += `
                      <li style="background-color: ${corFundo};">${disciplinaValor} - 
                      ${descricaoValor} - 
@@ -189,19 +187,20 @@ async function mostrarTarefas(tarefa) {
         console.error('Erro ao buscar o dado:', erro);
   }
 }
+document.addEventListener("DOMContentLoaded", mostrarTarefas);
 
 
-async function exluirTarefa(id) {
+async function excluirTarefa(id) {
     if(!confirm("Tem certeza que deseja excluir essa tarefa?")){
         return;
     }
     try{
-        const resposta = await fetch(`${URL_API_TAREFA}\${id}`,{
+        const resposta = await fetch(`${URL_API_TAREFA}/${id}`,{
             method: 'DELETE'
         });
         if(resposta.ok){
             alert("Tarefa excluida");
-            mostrarTarefas();
+            window.parent.mostrarTarefas();
         }else{
             alert("Não foi possivel excluir a tarefa");
         }

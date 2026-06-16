@@ -149,6 +149,33 @@ app.post('/api/tarefas', (req, res) => {
   );
 });
 
+app.get('/api/tarefas', (req, res) => {
+  db.all('SELECT * FROM tarefas ORDER BY criado_em DESC', (err, rows) => {
+    if (err) {
+      return res.status(500).json({ erro: err.message });
+    }
+    res.json(rows); // Entrega a lista de tarefas salva para o seu frontend
+  });
+});
+
+
+// DELETE - Deletar tarefa
+app.delete('/api/tarefas/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.run('DELETE FROM tarefas WHERE id = ?', [id], function(err) {
+    if (err) {
+      res.status(500).json({ erro: err.message });
+      return;
+    }
+    if (this.changes === 0) {
+      res.status(404).json({ erro: 'Tarefa não encontrado' });
+      return;
+    }
+    res.json({ mensagem: 'Tarefa excluida com sucesso' });
+  });
+});
+
 // POST - Fazer login
 app.post('/api/login', (req, res) => {
   const { email, senha } = req.body;

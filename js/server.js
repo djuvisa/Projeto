@@ -37,7 +37,7 @@ function hashSenha(senha) {
 //
 // Função para inicializar o banco de dados
 function inicializarBancoDados() {
-// tabela usuat
+// tabela usuario
   db.run(`
     CREATE TABLE IF NOT EXISTS usuarios (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -158,26 +158,64 @@ app.get('/api/tarefas', (req, res) => {
     res.json(rows); // Entrega a lista de tarefas salva para o seu frontend
   });
 });
+    app.get('/api/tarefas/:id', (req, res) => {
+  const { id } = req.params;
 
+  db.get(
+    'SELECT * FROM tarefas WHERE id = ?',
+    [id],
+    (err, row) => {
+
+      if (err) {
+        return res.status(500).json({ erro: err.message });
+      }
+
+      if (!row) {
+        return res.status(404).json({
+          erro: 'Tarefa não encontrada'
+        });
+      }
+
+      res.json(row);
+    }
+  );
+});
 //PACTH Atualizar Tarefa
 app.patch('/api/tarefas/:id', (req, res) => {
+   console.log("PATCH RECEBIDO");
+  console.log(req.body);
+
   const { id } = req.params;
+   
+  const {
+    disciplina,
+    descricao,
+    dataAtual,
+    dataEntrega
+  } = req.body;
 
   const sql = 'UPDATE tarefas SET disciplina = ?, descricao = ?, dataAtual = ?, dataEntrega = ? WHERE id = ?';
 
-  db.run(sql, [disciplina, descricao, dataAtual, dataEntrega, id], function(err) {
+  db.run(
+    sql,  
+    [disciplina, descricao, dataAtual, dataEntrega, id],
+    function(err) {
       if (err) {
-          res.status(500).json({ erro: err.message });
-          return;
+        res.status(500).json({ erro: err.message });
+        return;
       }
-      if (this.changes === 0) {
-          res.status(404).json({ erro: 'Tarefa não encontrado' });
-          return;
-      }
-      res.json({ mensagem: 'Tarefa atualizada com sucesso!' });
-    });
-});
 
+      if (this.changes === 0) {
+        res.status(404).json({ erro: 'Tarefa não encontrada' });
+        return;
+      }
+
+      res.json({
+        mensagem: 'Tarefa atualizada com sucesso!'
+      });
+    }
+  );
+});
 // DELETE - Deletar tarefa
 app.delete('/api/tarefas/:id', (req, res) => {
   const { id } = req.params;

@@ -122,10 +122,17 @@ criarTarefa.addEventListener('click', async (event) => {
         modalTarefa.style.display = 'none';
 }
 
-    console.log('Vai chamar enviarTarefa');
-    await enviarTarefa(tarefa);
+   console.log('Vai salvar tarefa');
 
-    document.getElementById('formTarefa').reset();
+console.log('idAtual =', idAtual);
+
+if(idAtual){
+    await atualizarTarefa(idAtual, tarefa);
+}else{
+    await enviarTarefa(tarefa);
+}
+
+document.getElementById('formTarefa').reset();
 });
 }
 //Enviando a tarefa para o banco
@@ -218,40 +225,64 @@ function carregarEdicao(id){
 }
 
 let idAtual = null;
+window.addEventListener('DOMContentLoaded', iniciarPagina); 
 
 //Função feita com IA
-function iniciarPagina(){
-    const parametrosDaURL = new URLSearchParams(window.location.search);
-    const idEdicao = parametrosDaURL.get('id');
+   async function iniciarPagina(){
 
-   if (idEdicao) {
-        idAtual = idEdicao; // Guarda o ID na variável global
-        editarTarefa(idAtual); // Chama a função que preenche os dados (Passo 3)
-    } else {
-        idAtual = null; // Garante que está vazio se for uma nova tarefa
-        document.getElementById('formTarefa').reset()
+    const params = new URLSearchParams(window.location.search);
+    idAtual = params.get('id');
+
+    if(idAtual){
+
+        document.getElementById('criarTarefa').textContent = 'ATUALIZAR';
+
+        const resposta = await fetch(   
+            `${URL_API_TAREFA}/${idAtual}`
+        );
+
+        const tarefa = await resposta.json();
+
+        disciplina.value = tarefa.disciplina;
+        descricao.value = tarefa.descricao;
+        dataAtual.value = tarefa.dataAtual;
+        dataEntrega.value = tarefa.dataEntrega;
     }
 }
 
-async function editarTarefa(id){
-    if(!confirm("Deseja atualizar essa tarefa?")){
-        return;
-    }
+    async function atualizarTarefa(id, tarefa){
+
+    console.log("Enviando:");
+    console.log(tarefa);
+    
     try{
 
-        const resposta = await fetch(URL_API_TAREFA + id, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify()
-        });
-        const resultado = await resposta.json();
+        const resposta = await fetch(
+            `${URL_API_TAREFA}/${id}`,
+            {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(tarefa)
+            }
+        );
 
-        if (resposta.ok) {
-            alert('Tarefa Atualizada!');
-        } else {
-            alert('Erro: ' + (resultado.mensagem || 'Não foi possível atualizar tarefa'));
+    const texto = await resposta.text();
+        console.log(texto);
+        if(resposta.ok){
+
+            alert('Tarefa atualizada com sucesso!');
+
+            if(window.parent.mostrarTarefas){
+                window.parent.mostrarTarefas();
+            }
+
+        }else{
+            alert(resultado.erro);
         }
-    } catch (erro) {
-        alert('Não foi possível conectar ao servidor.');
+
+    }catch(erro){
+        console.error(erro);
     }
 }

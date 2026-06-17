@@ -399,10 +399,14 @@ input {
 .conteudo-principal {
     max-width: 750px;
     width: 90%;
-    margin: 0 auto 50px auto;
+    margin: 0 auto 140px auto;
     display: flex;
     flex-direction: column;
-    gap: 16px; /* Espaço entre cada barra */
+    gap: 15px; /* Aumentei um pouco o espaço para respirar melhor, igual ao print */
+    
+    /* ADICIONE ESSAS DUAS LINHAS ABAIXO PARA CORRIGIR O ALINHAMENTO: */
+    align-items: stretch;       /* Força todos os cards a terem exatamente a mesma largura */
+    justify-content: flex-start; /* Cancela o space-between do 'main' global */
 }
 
 /* bordas */
@@ -412,7 +416,7 @@ input {
     background-color: rgba(255, 255, 255, 0.04); /* Fundo sutil */
     border: 2px solid #F2B33D; /* Borda amarela contínua */
     border-radius: 16px; /* Cantos arredondados da foto */
-    padding: 18px 24px;
+    padding: 16px 24px;
     color: white;
     font-family: sans-serif;
     cursor: pointer;
@@ -444,9 +448,10 @@ input {
 }
 
 .texto h3 {
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 2px;
     font-weight: 600;
+    text-align: left;
 }
 
 .texto p {
@@ -478,10 +483,14 @@ input {
 .conteudo-html {
     max-width: 750px;
     width: 90%;
-    margin: 0 auto 50px auto;
+    margin: 0 auto 140px auto;
     display: flex;
     flex-direction: column;
-    gap: 16px; /* Espaço entre cada barra */
+    gap: 15px; /* Aumentei um pouco o espaço para respirar melhor, igual ao print */
+    
+    /* ADICIONE ESSAS DUAS LINHAS ABAIXO PARA CORRIGIR O ALINHAMENTO: */
+    align-items: stretch;       /* Força todos os cards a terem exatamente a mesma largura */
+    justify-content: flex-start; /* Cancela o space-between do 'main' global */
 }
 .card-html, .PW2 {
     display: flex;

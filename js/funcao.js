@@ -180,9 +180,9 @@ async function mostrarTarefas() {
             const diferencaEmDias = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24));
             const tempoLimite = diferencaEmDias + " dias";
                 
-            const corFundo = diferencaEmDias <= 3 ? '#ff0000' : (diferencaEmDias <= 7 ? '#ffff00' : '#008000');
+           const corFundo = diferencaEmDias < 0 ? '#ff0000' : (diferencaEmDias <= 3 ? '#ffff00' : (diferencaEmDias <= 7 ? '#008000' : '#001e80'));
                      listaTarefas.innerHTML += `
-                     <li style="background-color: ${corFundo};">${disciplinaValor} - 
+                     <li id="tarefa" style="background-color: ${corFundo};">${disciplinaValor} - 
                      ${descricaoValor} - 
                      ${tempoLimite} - 
                      <button onclick="carregarEdicao('${item.id}')">✎</button> -

@@ -761,6 +761,7 @@ input {
     width: 50vw;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 20px;
 }
 
 .tarefasPendentes p{
@@ -773,8 +774,19 @@ input {
 
 #semana{
     text-align: center;
-    color: black;
+    color: rgb(255, 255, 255);
     font-size:medium;
     margin-left: 10rem;
     margin-right: 10rem;
+}
+#tarefa {
+    border-radius: 5px;
+    text-shadow: 0 3px 10px rgb(0, 0, 0);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin-bottom: 3%;
+}
+
+#tarefa:hover{
+    background-color: #e0a82e; /* Amarelo um pouquinho mais escuro ao passar o mouse */
+    transform: translateY(-2px); /* Efeito suave de "levantar" o botão */
 }

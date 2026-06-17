@@ -173,7 +173,8 @@ async function mostrarTarefas() {
             const diferencaEmDias = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24));
             const tempoLimite = diferencaEmDias + " dias";
                 
-            const corFundo = diferencaEmDias <= 3 ? '#ff0000' : (diferencaEmDias <= 7 ? '#ffff00' : '#008000');
+            const corFundo = diferencaEmDias < 0 ? '#ff0000' : (diferencaEmDias < 3 ? '#ffff00' : (diferencaEmDias < 7 ? '#0000ff' : '#008000'));
+
                      listaTarefas.innerHTML += `
                      <li style="background-color: ${corFundo};">${disciplinaValor} - 
                      ${descricaoValor} - 

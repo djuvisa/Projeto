@@ -753,35 +753,59 @@ input {
     margin-bottom: 5%;
 }
 
-.tarefasPendentes{
+.tarefasPendentes {
     border: #F2B33D solid;
     border-radius: 4px;
-    height: 12rem;
+    height: 22rem;
     max-width: 1200px;
-    width: 50vw;
+    width: 40vw;
     margin-left: auto;
     margin-right: auto;
     border-radius: 20px;
+
+    /* Novas propriedades para adicionar o Scroll */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Garante que os cantos arredondados não sumam */
 }
 
 .tarefasPendentes p{
     text-align: center;
     margin-top: 2%;
-    margin-bottom: 2%;
+    margin-bottom: 1%;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 20px;
 }
 
-#semana{
-    text-align: center;
+#semana {
+    text-align: left; /* Alinha o texto para a esquerda para ficar mais organizado */
     color: rgb(255, 255, 255);
-    font-size:medium;
-    margin-left: 10rem;
-    margin-right: 10rem;
+    font-size: 16px;
+    margin: 0 auto;
+    padding: 10px 25px; /* Espaço nas laterais para não grudar na borda amarela nem no scroll */
+    flex-grow: 1;
+    overflow-y: auto;
+    list-style: none; /* Remove qualquer bolinha padrão de lista, se houver */
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Cria um espaçamento padrão e fixo entre uma tarefa e outra */
+}
+#semana li, #tarefa {
+    display: flex;
+    justify-content: space-between; /* Texto na esquerda, botões na extrema direita */
+    align-items: center; /* Centraliza verticalmente o texto e os botões */
+    padding: 12px 20px;
+    border-radius: 8px; /* Cantos levemente arredondados combinam mais */
+    font-family: sans-serif;
+    font-weight: 600;
+    margin-bottom: 0; /* O gap do contêiner já resolve o espaço */
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 #tarefa {
     border-radius: 5px;
-    text-shadow: 0 3px 10px rgb(0, 0, 0);
+    text-shadow: 0 2px 10px rgb(0, 0, 0);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     margin-bottom: 3%;
 }
@@ -789,4 +813,68 @@ input {
 #tarefa:hover{
     background-color: #e0a82e; /* Amarelo um pouquinho mais escuro ao passar o mouse */
     transform: translateY(-2px); /* Efeito suave de "levantar" o botão */
+}
+
+/*tela 12 (aba de criar tarefa)*/
+#criarTarefa {
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 2vh;
+    width:35vw;
+    transition: all 0.3s ease; /* Suaviza a transição do hover */
+}
+#criarTarefa:hover{
+    background-color: #f3af1b; /* Amarelo um pouquinho mais escuro ao passar o mouse */
+    transform: translateY(-3px); /* Efeito suave de "levantar" o botão */
+}
+
+/*parte dos botoes de editar e exluir*/
+.item-tarefa {
+    display: flex;
+    justify-content: space-between; /* Empurra o texto para a esquerda e os botões para a direita */
+    align-items: center; /* Centraliza tudo verticalmente */
+    padding: 12px 20px;
+    border-radius: 10px; /* Cantos arredondados mais suaves */
+    font-family: sans-serif;
+    font-weight: 600;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease;
+}
+.item-tarefa:hover {
+    transform: translateY(-2px); /* Efeito sutil ao passar o mouse na linha */
+}
+.acoes-tarefa {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Distância entre o botão de editar e excluir */
+}
+.btn-acao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.25); /* Fundo semi-transparente que combina com qualquer cor */
+    color: inherit; /* Herda a cor do texto do card atual */
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+.btn-editar:hover {
+    background-color: #1c3272;
+    color: white !important;
+}
+.btn-excluir:hover {
+    background-color: #d93838;
+    color: white !important;
+}
+
+/* Ajuste inteligente de cor do texto baseado no fundo (pego na i.a para tentar deixar algo mais suave de ler) */
+/* Se a cor de fundo for Amarela (#ffff00), deixa o texto escuro para leitura */
+.item-tarefa[style*="background-color: rgb(255, 255, 0)"], 
+.item-tarefa[style*="background-color: #ffff00"] {
+    color: #1C3272 !important;
 }

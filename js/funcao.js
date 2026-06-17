@@ -181,13 +181,17 @@ async function mostrarTarefas() {
             const tempoLimite = diferencaEmDias + " dias";
                 
            const corFundo = diferencaEmDias < 0 ? '#ff0000' : (diferencaEmDias <= 3 ? '#ffff00' : (diferencaEmDias <= 7 ? '#008000' : '#001e80'));
-                     listaTarefas.innerHTML += `
-                     <li id="tarefa" style="background-color: ${corFundo};">${disciplinaValor} - 
-                     ${descricaoValor} - 
-                     ${tempoLimite} - 
-                     <button onclick="carregarEdicao('${item.id}')">✎</button> -
-                     <button onclick="excluirTarefa('${item.id}')">🗑</button></li>`;
-
+listaTarefas.innerHTML += `
+    <li class="item-tarefa" style="background-color: ${corFundo};">
+        <span class="texto-tarefa">
+            ${disciplinaValor} - ${descricaoValor} - ${tempoLimite}
+        </span>
+        <div class="acoes-tarefa">
+            <button class="btn-acao btn-editar" onclick="carregarEdicao('${item.id}')">✎</button>
+            <button class="btn-acao btn-excluir" onclick="excluirTarefa('${item.id}')">🗑</button>
+        </div>
+    </li>
+`;
         });
     }
      } catch (erro) {

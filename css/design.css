@@ -64,16 +64,29 @@ nav{
     color: #F2B33D; /* Link fica amarelo ao passar o mouse */
 }
 
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1300px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 30px 0;
+    position: relative;
+}
+
 .destaque {
     flex: 1;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: column; 
+    align-items: flex-start; 
     justify-content: center;
     padding: 0;
     max-width: 500px;
     width: 100%;
-    min-height: auto; /* Remove o 100vh que jogava as matérias lá para baixo */
+    min-height: auto;
+    order: 1; 
 }
 
 #destaque p{
@@ -109,6 +122,7 @@ nav{
     line-height: 1.3;
     order: 2; /* Fica abaixo do robô */
 }
+
 
 /* TELA1 - MATERIAS*/
 .materias{
@@ -453,6 +467,191 @@ input {
     transform: translateX(3px);
 }
 
+/*tela 7*/
+.titulo-pagina {
+    text-align: center;
+    color: #F2B33D;
+    font-size: 36px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 40px;
+}
+.conteudo-html {
+    max-width: 750px;
+    width: 90%;
+    margin: 0 auto 50px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Espaço entre cada barra */
+}
+.card-html, .PW2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Garante ícone na esquerda, texto no centro e seta na direita */
+    background-color: rgba(255, 255, 255, 0.04); 
+    border: 2px solid #F2B33D; 
+    border-radius: 16px; 
+    padding: 18px 24px;
+    color: white;
+    font-family: sans-serif;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.PW2 {
+    border-style: dashed;
+}
+
+.conteudo-html .card-html:hover, .conteudo-html .PW2:hover {
+    background-color: rgba(245, 183, 70, 0.199); /* Ganha um brilho amarelo de fundo */
+    transform: translateX(8px); /* Desloca sutilmente para a direita ao interagir */
+    box-shadow: 0 4px 15px rgba(242, 179, 61, 0.2);
+}
+
+.texto2 {
+    flex-grow: 1; /* Faz o texto empurrar a seta para a extremidade direita */
+}
+
+.texto2 h3 {
+    font-size: 18px;
+    margin-bottom: 2px;
+    font-weight: 600;
+    
+}
+
+.texto2 p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6); /* Subtexto levemente cinza */
+}
+
+.texto2 a{
+    text-decoration: none;
+    color: inherit; /* Faz o link usar a mesma cor de texto da barra (white) */
+}
+
+/* Faz a setinha da ponta ir para frente no hover */
+.conteudo-html .card-html:hover .modulo-seta, .conteudo-html .PW2:hover .modulo-seta {
+    opacity: 1;
+    transform: translateX(3px);
+}
+
+.seta a{
+    text-decoration: none;
+    color: #F2B33D;
+}
+
+/*tela 8 e 9*/
+.titulo-pagina {
+    text-align: center;
+    color: #f7b933; /* Texto em amarelo */
+    font-size: 2rem;
+    margin-top: 30px;
+    text-transform: uppercase;
+}
+
+.subtitulo-pagina {
+    text-align: center;
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+/*  Área do Vídeo (Main)*/
+#conteudo-video {
+    flex: 1; /* Faz essa área ocupar o espaço restante, empurrando o footer para baixo */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha o vídeo mais para o topo do container */
+    padding: 20px;
+}
+
+/* Centraliza e torna o iframe do YouTube responsivo */
+#conteudo-video iframe {
+    width: 100%;
+    max-width: 800px; 
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    border: 3px solid #f7b933; /*Borda amarela com 3px de espessura */
+    box-shadow: 0px 10px 25px #f7b933b0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; 
+}
+#conteudo-video iframe:hover {
+    transform: scale(1.02); /* Dá um leve zoom de 2% no vídeo */
+    box-shadow: 0px 15px 35px #dda429b7; /* Deixa a sombra mais forte e realista */
+    border-color: #f7b933d0; /* Muda a cor da borda para branco (opcional, pode manter ou trocar por outra) */
+    cursor: pointer; /* Garante que o ponteiro do mouse mude para a mãozinha */
+}
+
+/*tela 10*/
+.titulo-pagina {
+    text-align: center;
+    color: #f7b933;
+    font-size: 2rem;
+    margin-top: 30px;
+    text-transform: uppercase;
+}
+
+.subtitulo-pagina {
+    text-align: center;
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+/* Área do Vídeo (Main)*/
+#conteudo-video2 {
+    display: flex;
+    flex-direction: column;   /* Faz o botão ficar embaixo dos vídeos */
+    align-items: center;       /* Centraliza horizontalmente tudo que está dentro dele */
+    gap: 40px;                 /* Espaço de 40px entre a linha dos vídeos e o botão */
+    padding: 20px;
+}
+
+.container-videos {
+    display: flex;
+    justify-content: center;
+    gap: 120px;                /* Mantém o seu espaçamento original entre os dois vídeos */
+    flex-wrap: wrap;           /* Permite que os vídeos quebrem de linha se a tela for pequena */
+    width: 100%;
+}
+
+/* Centraliza e torna o iframe do YouTube responsivo */
+.container-videos iframe {
+    width: 100%;
+    max-width: 35%;            /* Ajustado para no máximo 45% para caberem dois na mesma linha */
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    border: 3px solid #f7b933;
+    box-shadow: 0px 10px 25px #e6c17181;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; 
+}
+
+.container-videos iframe:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 15px 35px #816e436e;
+    border-color: #f7b933d0; 
+    cursor: pointer;
+}
+
+.botao-exercicios {
+    display: inline-block;
+    padding: 12px 35px;
+    background-color: #f7b933; /* Usa o mesmo tom de amarelo do seu título */
+    color: #12192c;            /* Tom escuro para contrastar bem com o fundo azul */
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    text-decoration: none;     /* Remove o sublinhado de link */
+    border-radius: 6px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.botao-exercicios:hover {
+    background-color: #e0a82e; /* Amarelo um pouquinho mais escuro ao passar o mouse */
+    transform: translateY(-2px); /* Efeito suave de "levantar" o botão */
+}
 
 /*TELA 11 e 12 - AGENDA*/
 

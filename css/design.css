@@ -764,6 +764,8 @@ input {
 
 #semana{
     text-align: center;
+    color: black;
+    font-size:medium;
     margin-left: 10rem;
     margin-right: 10rem;
 }

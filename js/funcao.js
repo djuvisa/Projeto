@@ -178,7 +178,7 @@ async function mostrarTarefas() {
                      <li style="background-color: ${corFundo};">${disciplinaValor} - 
                      ${descricaoValor} - 
                      ${tempoLimite} - 
-                     <button onclick="editarTarefa('${item.id}')">✎</button> -
+                     <button onclick="carregarEdicao('${item.id}')">✎</button> -
                      <button onclick="excluirTarefa('${item.id}')">🗑</button></li>`;
 
         });
@@ -209,15 +209,40 @@ async function excluirTarefa(id) {
 }
 }
 
+function carregarEdicao(id){
+    const iframe = document.getElementById('paginaTarefa');
+    const modal = document.getElementById('modalTarefa');
+    
+    if(iframe) iframe.src = `tela12.html?id=${id}`;
+    if(modal) modal.style.display = 'block';
+}
+
+let idAtual = null;
+
+//Função feita com IA
+function iniciarPagina(){
+    const parametrosDaURL = new URLSearchParams(window.location.search);
+    const idEdicao = parametrosDaURL.get('id');
+
+   if (idEdicao) {
+        idAtual = idEdicao; // Guarda o ID na variável global
+        editarTarefa(idAtual); // Chama a função que preenche os dados (Passo 3)
+    } else {
+        idAtual = null; // Garante que está vazio se for uma nova tarefa
+        document.getElementById('formTarefa').reset()
+    }
+}
+
 async function editarTarefa(id){
     if(!confirm("Deseja atualizar essa tarefa?")){
         return;
     }
     try{
-        const resposta = await fetch(URL_API_TAREFA, {
-            method: 'POST',
+
+        const resposta = await fetch(URL_API_TAREFA + id, {
+            method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(tarefa)
+            body: JSON.stringify()
         });
         const resultado = await resposta.json();
 

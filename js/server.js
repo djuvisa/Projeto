@@ -119,6 +119,7 @@ app.post('/api/usuarios', (req, res) => {
     res.status(201).json({ id: this.lastID, nome, email });
   });
 });
+
 // POST - Criar tarefa
 app.post('/api/tarefas', (req, res) => {
    console.log('Recebido:', req.body);
@@ -158,6 +159,24 @@ app.get('/api/tarefas', (req, res) => {
   });
 });
 
+//PACTH Atualizar Tarefa
+app.patch('/api/tarefas/:id', (req, res) => {
+  const { id } = req.params;
+
+  const sql = 'UPDATE tarefas SET disciplina = ?, descricao = ?, dataAtual = ?, dataEntrega = ? WHERE id = ?';
+
+  db.run(sql, [disciplina, descricao, dataAtual, dataEntrega, id], function(err) {
+      if (err) {
+          res.status(500).json({ erro: err.message });
+          return;
+      }
+      if (this.changes === 0) {
+          res.status(404).json({ erro: 'Tarefa não encontrado' });
+          return;
+      }
+      res.json({ mensagem: 'Tarefa atualizada com sucesso!' });
+    });
+});
 
 // DELETE - Deletar tarefa
 app.delete('/api/tarefas/:id', (req, res) => {

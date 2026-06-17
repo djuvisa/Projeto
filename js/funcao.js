@@ -187,7 +187,36 @@ async function mostrarTarefas() {
         console.error('Erro ao buscar o dado:', erro);
   }
 }
-document.addEventListener("DOMContentLoaded", mostrarTarefas);
+
+if(document.getElementById('semana')) {
+    document.addEventListener("DOMContentLoaded", mostrarTarefas);
+}
+
+// EXECUTA AUTOMATICAMENTE SE ESTIVER DENTRO DA TELA12.HTML (IFRAME)
+document.addEventListener("DOMContentLoaded", async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    
+    // Se existir um ID na URL da página atual, busca os dados do banco para editar
+    if (id && disciplina) { 
+        try {
+            const resposta = await fetch(`${URL_API_TAREFA}/${id}`);
+            const dadosDoBanco = await resposta.json();
+
+            disciplina.value = dadosDoBanco.disciplina || '';
+            descricao.value = dadosDoBanco.descricao || '';
+            
+            // Trata a data para o formato yyyy-MM-dd exigido pelo input date
+            if(dadosDoBanco.dataAtual) dataAtual.value = dadosDoBanco.dataAtual.split('T')[0];
+            if(dadosDoBanco.dataEntrega) dataEntrega.value = dadosDoBanco.dataEntrega.split('T')[0];
+            
+            // Altera o texto do botão para "Atualizar" se desejar
+            if(criarTarefa) criarTarefa.textContent = "Atualizar Tarefa";
+        } catch (erro) {
+            console.error('Erro ao buscar dados do banco:', erro);
+        }
+    }
+});
 
 
 async function excluirTarefa(id) {
@@ -209,6 +238,7 @@ async function excluirTarefa(id) {
 }
 }
 
+// Abre o modal e aponta o iframe para a tela de edição com o ID correto
 function carregarEdicao(id){
     const iframe = document.getElementById('paginaTarefa');
     const modal = document.getElementById('modalTarefa');
@@ -217,41 +247,26 @@ function carregarEdicao(id){
     if(modal) modal.style.display = 'block';
 }
 
-let idAtual = null;
-
-//Função feita com IA
-function iniciarPagina(){
-    const parametrosDaURL = new URLSearchParams(window.location.search);
-    const idEdicao = parametrosDaURL.get('id');
-
-   if (idEdicao) {
-        idAtual = idEdicao; // Guarda o ID na variável global
-        editarTarefa(idAtual); // Chama a função que preenche os dados (Passo 3)
-    } else {
-        idAtual = null; // Garante que está vazio se for uma nova tarefa
-        document.getElementById('formTarefa').reset()
-    }
-}
-
-async function editarTarefa(id){
-    if(!confirm("Deseja atualizar essa tarefa?")){
-        return;
-    }
-    try{
-
-        const resposta = await fetch(URL_API_TAREFA + id, {
-            method: 'PATCH',
+// Salva as alterações enviando os novos dados para o banco
+async function editarTarefa(id, dadosAtualizados){
+    try {
+        const resposta = await fetch(`${URL_API_TAREFA}/${id}`, {
+            method: 'PUT', // ou 'PATCH', dependendo da sua API
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify()
+            body: JSON.stringify(dadosAtualizados)
         });
         const resultado = await resposta.json();
 
         if (resposta.ok) {
             alert('Tarefa Atualizada!');
+            if(window.parent && window.parent.mostrarTarefas) {
+                window.parent.mostrarTarefas();
+            }
         } else {
-            alert('Erro: ' + (resultado.mensagem || 'Não foi possível atualizar tarefa'));
+            alert('Erro: ' + (resultado.mensagem || 'Não foi possível atualizar a tarefa'));
         }
-    } catch (erro) {
-        alert('Não foi possível conectar ao servidor.');
+    } catch(erro) {
+        console.error("Erro na requisição de edição:", erro);
+        alert("Erro ao conectar com o servidor.");
     }
 }

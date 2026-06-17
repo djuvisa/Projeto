@@ -192,33 +192,6 @@ if(document.getElementById('semana')) {
     document.addEventListener("DOMContentLoaded", mostrarTarefas);
 }
 
-// EXECUTA AUTOMATICAMENTE SE ESTIVER DENTRO DA TELA12.HTML (IFRAME)
-document.addEventListener("DOMContentLoaded", async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-    
-    // Se existir um ID na URL da página atual, busca os dados do banco para editar
-    if (id && disciplina) { 
-        try {
-            const resposta = await fetch(`${URL_API_TAREFA}/${id}`);
-            const dadosDoBanco = await resposta.json();
-
-            disciplina.value = dadosDoBanco.disciplina || '';
-            descricao.value = dadosDoBanco.descricao || '';
-            
-            // Trata a data para o formato yyyy-MM-dd exigido pelo input date
-            if(dadosDoBanco.dataAtual) dataAtual.value = dadosDoBanco.dataAtual.split('T')[0];
-            if(dadosDoBanco.dataEntrega) dataEntrega.value = dadosDoBanco.dataEntrega.split('T')[0];
-            
-            // Altera o texto do botão para "Atualizar" se desejar
-            if(criarTarefa) criarTarefa.textContent = "Atualizar Tarefa";
-        } catch (erro) {
-            console.error('Erro ao buscar dados do banco:', erro);
-        }
-    }
-});
-
-
 async function excluirTarefa(id) {
     if(!confirm("Tem certeza que deseja excluir essa tarefa?")){
         return;
@@ -251,7 +224,7 @@ function carregarEdicao(id){
 async function editarTarefa(id, dadosAtualizados){
     try {
         const resposta = await fetch(`${URL_API_TAREFA}/${id}`, {
-            method: 'PUT', // ou 'PATCH', dependendo da sua API
+            method: 'PATCH', // ou 'PATCH', dependendo da sua API
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dadosAtualizados)
         });

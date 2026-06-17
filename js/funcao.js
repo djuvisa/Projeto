@@ -269,7 +269,7 @@ window.addEventListener('DOMContentLoaded', iniciarPagina);
         );
 
     const texto = await resposta.text();
-        console.log(texto);
+console.log(texto);
         if(resposta.ok){
 
             alert('Tarefa atualizada com sucesso!');

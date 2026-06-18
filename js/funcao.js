@@ -183,14 +183,19 @@ async function mostrarTarefas() {
             const diferencaEmDias = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24));
             const tempoLimite = diferencaEmDias + " dias";
                 
-           const corFundo = diferencaEmDias < 0 ? '#ff0000' : (diferencaEmDias <= 3 ? '#ff9900' : (diferencaEmDias <= 7 ? '#ffff00' : '#004280'));
-                     listaTarefas.innerHTML += `
-                     <li id="tarefa" style="background-color: ${corFundo};">${disciplinaValor} - 
-                     ${descricaoValor} - 
-                     ${tempoLimite} - 
-                     <button onclick="carregarEdicao('${item.id}')">✎</button> -
-                     <button onclick="excluirTarefa('${item.id}')">🗑</button></li>`;
 
+           const corFundo = diferencaEmDias < 0 ? '#ff0000' : (diferencaEmDias <= 3 ? '#ffff00' : (diferencaEmDias <= 7 ? '#008000' : '#001e80'));
+           listaTarefas.innerHTML += `
+    <li class="item-tarefa" style="background-color: ${corFundo};">
+        <span class="texto-tarefa">
+            ${disciplinaValor} - ${descricaoValor} - ${tempoLimite}
+        </span>
+        <div class="acoes-tarefa">
+            <button class="btn-acao btn-editar" onclick="carregarEdicao('${item.id}')">✎</button>
+            <button class="btn-acao btn-excluir" onclick="excluirTarefa('${item.id}')">🗑</button>
+        </div>
+    </li>
+`;
         });
     }
      } catch (erro) {
@@ -243,6 +248,7 @@ window.addEventListener('DOMContentLoaded', iniciarPagina);
         const dia = String(hoje.getDate()).padStart(2, '0');
         dataAtual.value = `${ano}-${mes}-${dia}`;
     }
+
     if(idAtual){
 
         document.getElementById('criarTarefa').textContent = 'ATUALIZAR';
@@ -255,8 +261,10 @@ window.addEventListener('DOMContentLoaded', iniciarPagina);
 
         disciplina.value = tarefa.disciplina;
         descricao.value = tarefa.descricao;
+
         dataAtual.value = tarefa.dataAtual.split('T')[0]; // Garante o formato YYYY-MM-DD //Feito por IA a partir do prompt "Como transformara a dataAtual em um campo atualizado automaticamente?"
         dataEntrega.value = tarefa.dataEntrega.split('T')[0];
+
     }
 }
 
@@ -279,7 +287,7 @@ window.addEventListener('DOMContentLoaded', iniciarPagina);
         );
 
     const texto = await resposta.text();
-    console.log(texto);
+        console.log(texto);
         if(resposta.ok){
 
             if(window.parent.mostrarTarefas){

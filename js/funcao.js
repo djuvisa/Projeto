@@ -6,7 +6,8 @@ const URL_API_CADASTRO = 'http://localhost:3000/api/usuarios';
 const URL_API_LOGIN = 'http://localhost:3000/api/login';
 const URL_API_TAREFA = 'http://localhost:3000/api/tarefas';
 
-async function criarConta(){
+async function criarConta(event){
+    if (event) event.preventDefault();
     const nome = inputNome ? inputNome.value.trim() : '';
     const email = inputEmail ? inputEmail.value.trim() : '';
     const senha = inputSenha ? inputSenha.value : '';
@@ -28,7 +29,6 @@ async function criarConta(){
         const resultado = await resposta.json();
 
         if (resposta.ok) {
-            alert('Conta criada com sucesso!');
             window.location.href = 'tela4.html';
         } else {
             alert('Erro: ' + (resultado.erro || resultado.mensagem || 'Erro ao cadastrar'));
@@ -59,7 +59,6 @@ async function fazerLogin(){
         const resultado = await resposta.json();
 
         if (resposta.ok) {
-            alert('Login realizado com sucesso!');
             window.location.href = 'tela4.html';
         } else {
             alert('Erro: ' + (resultado.mensagem || 'Erro ao fazer login'));
@@ -122,10 +121,17 @@ criarTarefa.addEventListener('click', async (event) => {
         modalTarefa.style.display = 'none';
 }
 
-    console.log('Vai chamar enviarTarefa');
-    await enviarTarefa(tarefa);
+   console.log('Vai salvar tarefa');
 
-    document.getElementById('formTarefa').reset();
+console.log('idAtual =', idAtual);
+
+if(idAtual){
+    await atualizarTarefa(idAtual, tarefa);
+}else{
+    await enviarTarefa(tarefa);
+}
+
+document.getElementById('formTarefa').reset();
 });
 }
 //Enviando a tarefa para o banco
@@ -139,7 +145,6 @@ async function enviarTarefa(tarefa){
         const resultado = await resposta.json();
 
         if (resposta.ok) {
-            alert('Tarefa Criada!');
             mostrarTarefas()
         } else {
             alert('Erro: ' + (resultado.mensagem || 'Não foi possível salvar tarefa'));
@@ -166,17 +171,21 @@ async function mostrarTarefas() {
             // Atribuindo os valores do objeto 'item' para as suas variáveis // Linhas feitas por IA
             const disciplinaValor = item.disciplina;
             const descricaoValor = item.descricao;
-            const dataAtualValor = new Date(item.dataAtual);
-            const dataEntregaValor = new Date(item.dataEntrega);
 
-            const diferencaEmMilissegundos = dataEntregaValor - dataAtualValor; 
+            const dataHoje = new Date();
+            dataHoje.setHours(0,0,0,0);
+
+            const dataEntregaValor = new Date(item.dataEntrega);
+            dataEntregaValor.setMinutes(dataEntregaValor.getMinutes() + dataEntregaValor.getTimezoneOffset());
+            dataEntregaValor.setHours(0,0,0,0); //Feito po IA (ajuste de dataAtual)
+
+            const diferencaEmMilissegundos = dataEntregaValor - dataHoje; 
             const diferencaEmDias = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24));
             const tempoLimite = diferencaEmDias + " dias";
                 
-            const corFundo = diferencaEmDias < 0 ? '#ff0000' : (diferencaEmDias < 3 ? '#ffff00' : (diferencaEmDias < 7 ? '#0000ff' : '#008000'));
-
+           const corFundo = diferencaEmDias < 0 ? '#ff0000' : (diferencaEmDias <= 3 ? '#ff9900' : (diferencaEmDias <= 7 ? '#ffff00' : '#004280'));
                      listaTarefas.innerHTML += `
-                     <li style="background-color: ${corFundo};">${disciplinaValor} - 
+                     <li id="tarefa" style="background-color: ${corFundo};">${disciplinaValor} - 
                      ${descricaoValor} - 
                      ${tempoLimite} - 
                      <button onclick="carregarEdicao('${item.id}')">✎</button> -
@@ -188,10 +197,8 @@ async function mostrarTarefas() {
         console.error('Erro ao buscar o dado:', erro);
   }
 }
+document.addEventListener("DOMContentLoaded", mostrarTarefas);
 
-if(document.getElementById('semana')) {
-    document.addEventListener("DOMContentLoaded", mostrarTarefas);
-}
 
 async function excluirTarefa(id) {
     if(!confirm("Tem certeza que deseja excluir essa tarefa?")){
@@ -212,7 +219,6 @@ async function excluirTarefa(id) {
 }
 }
 
-// Abre o modal e aponta o iframe para a tela de edição com o ID correto
 function carregarEdicao(id){
     const iframe = document.getElementById('paginaTarefa');
     const modal = document.getElementById('modalTarefa');
@@ -221,26 +227,70 @@ function carregarEdicao(id){
     if(modal) modal.style.display = 'block';
 }
 
-// Salva as alterações enviando os novos dados para o banco
-async function editarTarefa(id, dadosAtualizados){
-    try {
-        const resposta = await fetch(`${URL_API_TAREFA}/${id}`, {
-            method: 'PATCH', // ou 'PATCH', dependendo da sua API
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dadosAtualizados)
-        });
-        const resultado = await resposta.json();
+let idAtual = null;
+window.addEventListener('DOMContentLoaded', iniciarPagina); 
 
-        if (resposta.ok) {
-            alert('Tarefa Atualizada!');
-            if(window.parent && window.parent.mostrarTarefas) {
+//Função feita com IA
+   async function iniciarPagina(){
+
+    const params = new URLSearchParams(window.location.search);
+    idAtual = params.get('id');
+
+    if (!idAtual && dataAtual) {
+        const hoje = new Date();
+        const ano = hoje.getFullYear();
+        const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoje.getDate()).padStart(2, '0');
+        dataAtual.value = `${ano}-${mes}-${dia}`;
+    }
+    if(idAtual){
+
+        document.getElementById('criarTarefa').textContent = 'ATUALIZAR';
+
+        const resposta = await fetch(   
+            `${URL_API_TAREFA}/${idAtual}`
+        );
+
+        const tarefa = await resposta.json();
+
+        disciplina.value = tarefa.disciplina;
+        descricao.value = tarefa.descricao;
+        dataAtual.value = tarefa.dataAtual.split('T')[0]; // Garante o formato YYYY-MM-DD //Feito por IA a partir do prompt "Como transformara a dataAtual em um campo atualizado automaticamente?"
+        dataEntrega.value = tarefa.dataEntrega.split('T')[0];
+    }
+}
+
+    async function atualizarTarefa(id, tarefa){
+
+    console.log("Enviando:");
+    console.log(tarefa);
+    
+    try{
+
+        const resposta = await fetch(
+            `${URL_API_TAREFA}/${id}`,
+            {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(tarefa)
+            }
+        );
+
+    const texto = await resposta.text();
+    console.log(texto);
+        if(resposta.ok){
+
+            if(window.parent.mostrarTarefas){
                 window.parent.mostrarTarefas();
             }
-        } else {
-            alert('Erro: ' + (resultado.mensagem || 'Não foi possível atualizar a tarefa'));
+
+        }else{
+            alert(resultado.erro);
         }
-    } catch(erro) {
-        console.error("Erro na requisição de edição:", erro);
-        alert("Erro ao conectar com o servidor.");
+
+    }catch(erro){
+        console.error(erro);
     }
 }

@@ -1,0 +1,6 @@
+<svg xmlns="http://w3.org" viewBox="0 0 100 100" width="200" height="200">
+  <!-- Círculo Preto Externo -->
+  <circle cx="50" cy="50" r="43" fill="none" stroke="#1a1a1a" stroke-width="7.5"/>
+  <!-- Seta para a Direita -->
+  <path d="M46 29 L67 50 L46 71 L46 59 L29 59 L29 41 L46 41 Z" fill="#1a1a1a"/>
+</svg>
